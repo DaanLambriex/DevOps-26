@@ -1,6 +1,9 @@
-document.getElementById("loadRepos").addEventListener("click", async () => {
+console.log("script geladen");
 
-    const response = await fetch("https://localhost:7005/api/repositories");
+document.getElementById("loadRepos").addEventListener("click", async () => {
+    console.log("knop geklikt");
+
+    const response = await fetch("http://localhost:5000/api/repositories");
 
     const repos = await response.json();
 
@@ -12,7 +15,7 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
 
         const li = document.createElement("li");
 
-        li.textContent = repo.name + " - " + repo.description;
+        li.textContent = `${repo.name} - ${repo.description ?? "Geen beschrijving"}`;
 
         repoList.appendChild(li);
 
