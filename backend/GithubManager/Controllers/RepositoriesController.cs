@@ -51,7 +51,7 @@ namespace GithubManager.Controllers
 
             var repositories = document.RootElement.EnumerateArray().Select(repo => new
             {
-                name = "CI-CD TEST - " + repo.GetProperty("name").GetString(),
+                name = repo.GetProperty("name").GetString(),
                 description = repo.GetProperty("description").GetString(),
                 htmlUrl = repo.GetProperty("html_url").GetString(),
                 isPrivate = repo.GetProperty("private").GetBoolean()
