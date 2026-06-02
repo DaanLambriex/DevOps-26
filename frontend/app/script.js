@@ -1,6 +1,6 @@
 document.getElementById("loadRepos").addEventListener("click", async () => {
     
-    const response = await fetch("http://localhost:5000/api/repositories");
+    const response = await fetch("https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net/api/repositories");
     const repos = await response.json();
 
     const repoList = document.getElementById("repoList");
