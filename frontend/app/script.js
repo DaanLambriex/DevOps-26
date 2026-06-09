@@ -5,7 +5,7 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
     repoList.innerHTML = "<li>Repositories laden...</li>";
     button.disabled = true;
     button.textContent = "Laden...";
-    
+
     try {
         const response = await fetch("https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net/api/repositories");
 
@@ -24,7 +24,7 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
             visibilityBadge.className = repo.isPrivate ? "badge private" : "badge public";
 
             const repoText = document.createElement("span");
-            repoText.textContent = ` ${repo.name} - ${repo.description ?? "Geen beschrijving"} `;
+            repoText.textContent = repo.name + " - " + (repo.description ?? "Geen beschrijving") + " ";
 
             const repoLink = document.createElement("a");
             repoLink.href = repo.htmlUrl;
@@ -45,5 +45,5 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
     } finally {
         button.disabled = false;
         button.textContent = "Load Repos";
-
+    }
     });
