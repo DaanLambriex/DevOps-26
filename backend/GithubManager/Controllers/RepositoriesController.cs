@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace GithubManager.Controllers
@@ -59,6 +60,53 @@ namespace GithubManager.Controllers
             }).ToList();
 
             return Ok(repositories);
+        }
+
+        [HttpPatch("{repositoryName}/archive")]
+        public async Task<IActionResult> UpdateArchiveStatus(string repositoryName, [FromBody] ArchiveRequest request)
+        {
+            var token = _configuration["Github:Token"];
+            var organization = _configuration["Github:Organization"];
+
+            using var client = new HttpClient();
+
+            client.DefaultRequestHeaders.UserAgent.Add(
+                new ProductInfoHeaderValue("GithubManager", "1.0"));
+
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", token);
+
+            var payload = JsonSerializer.Serialize(new
+            {
+                archived = request.Archived
+            });
+
+            var content = new StringContent(payload, Encoding.UTF8, "application/json");
+
+            var response = await client.PatchAsync(
+                $"https://api.github.com/repos/{organization}/{repositoryName}",
+                content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorBody = await response.Content.ReadAsStringAsync();
+
+                return StatusCode((int)response.StatusCode, new
+                {
+                    message = "Failed to update repository archive status.",
+                    githubResponse = errorBody
+                });
+            }
+
+            return Ok(new
+            {
+                message = request.Archived ? "Repository archived." : "Repository unarchived."
+            });
+        }
+
+        public class ArchiveRequest
+        {
+            public bool Archived { get; set; }
         }
     }
 }
