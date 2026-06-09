@@ -2,6 +2,8 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
     const activeRepoList = document.getElementById("activeRepoList");
     const archivedRepoList = document.getElementById("archivedRepoList");
     const button = document.getElementById("loadRepos");
+    //const API_BASE_URL = "https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net";
+    const API_BASE_URL = "http://localhost:7005/";
 
     activeRepoList.innerHTML = "<li>Repositories laden...</li>";
     archivedRepoList.innerHTML = "<li>Repositories laden...</li>";
@@ -9,7 +11,7 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
     button.textContent = "Laden...";
 
     try {
-        const response = await fetch("https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net/api/repositories");
+        const response = await fetch(`${API_BASE_URL}/api/repositories`);
 
         if (!response.ok) {
             throw new Error("Backend gaf een foutmelding");
@@ -41,6 +43,26 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
             li.appendChild(separator);
 
             li.appendChild(repoLink);
+
+            const archiveButton = document.createElement("button");
+            archiveButton.textContent = repo.archived ? "Herstel" : "Archiveer";
+
+            archiveButton.addEventListener("click", async () => {
+                await fetch(`${API_BASE_URL}/api/repositories/${repo.name}/archive`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        archived: !repo.archived
+                    })
+                });
+
+                document.getElementById("loadRepos").click();
+            });
+
+            li.appendChild(document.createTextNode(" - "));
+            li.appendChild(archiveButton);
 
             if (repo.archived) {
                 archivedRepoList.appendChild(li);
