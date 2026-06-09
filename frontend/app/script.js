@@ -47,5 +47,3 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
         button.textContent = "Load Repos";
 
     });
-
-});
