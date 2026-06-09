@@ -2,8 +2,7 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
     const activeRepoList = document.getElementById("activeRepoList");
     const archivedRepoList = document.getElementById("archivedRepoList");
     const button = document.getElementById("loadRepos");
-    //const API_BASE_URL = "https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net";
-    const API_BASE_URL = "http://localhost:7005/";
+    const API_BASE_URL = "https://githubmanager-daan-grang0c8b5gjdadg.westeurope-01.azurewebsites.net";
 
     activeRepoList.innerHTML = "<li>Repositories laden...</li>";
     archivedRepoList.innerHTML = "<li>Repositories laden...</li>";
