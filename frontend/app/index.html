@@ -12,7 +12,15 @@
 
     <button id="loadRepos">Load repositories</button>
 
-    <ul id="repoList"></ul>
+    <details open>
+        <summary>Niet-gearchiveerde repositories</summary>
+        <ul id="activeRepoList"></ul>
+    </details>
+
+    <details>
+        <summary>Gearchiveerde repositories</summary>
+        <ul id="archivedRepoList"></ul>
+    </details>
 
     <script src="script.js"></script>
 
