@@ -34,3 +34,8 @@ li {
 a {
     margin-left: 8px;
 }
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
