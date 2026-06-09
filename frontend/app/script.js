@@ -30,5 +30,3 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
         repoList.appendChild(li);
 
     });
-
-});
