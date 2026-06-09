@@ -1,8 +1,10 @@
 document.getElementById("loadRepos").addEventListener("click", async () => {
-    const repoList = document.getElementById("repoList");
+    const activeRepoList = document.getElementById("activeRepoList");
+    const archivedRepoList = document.getElementById("archivedRepoList");
     const button = document.getElementById("loadRepos");
 
-    repoList.innerHTML = "<li>Repositories laden...</li>";
+    activeRepoList.innerHTML = "<li>Repositories laden...</li>";
+    archivedRepoList.innerHTML = "<li>Repositories laden...</li>";
     button.disabled = true;
     button.textContent = "Laden...";
 
@@ -14,7 +16,8 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
         }
 
         const repos = await response.json();
-        repoList.innerHTML = "";
+        activeRepoList.innerHTML = "";
+        archivedRepoList.innerHTML = "";
 
         repos.forEach(repo => {
             const li = document.createElement("li");
@@ -33,11 +36,17 @@ document.getElementById("loadRepos").addEventListener("click", async () => {
 
             li.appendChild(visibilityBadge);
             li.appendChild(repoText);
+
             const separator = document.createTextNode(" - ");
             li.appendChild(separator);
+
             li.appendChild(repoLink);
 
-            repoList.appendChild(li);
+            if (repo.archived) {
+                archivedRepoList.appendChild(li);
+            } else {
+                activeRepoList.appendChild(li);
+            }
         });
     } catch (error) {
         repoList.innerHTML = "<li>Er ging iets mis bij het laden van de repositories.</li>";

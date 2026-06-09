@@ -54,7 +54,8 @@ namespace GithubManager.Controllers
                 name = repo.GetProperty("name").GetString(),
                 description = repo.GetProperty("description").GetString(),
                 htmlUrl = repo.GetProperty("html_url").GetString(),
-                isPrivate = repo.GetProperty("private").GetBoolean()
+                isPrivate = repo.GetProperty("private").GetBoolean(),
+                archived = repo.GetProperty("archived").GetBoolean()
             }).ToList();
 
             return Ok(repositories);
