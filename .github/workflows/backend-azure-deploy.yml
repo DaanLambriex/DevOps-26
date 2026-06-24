@@ -30,6 +30,9 @@ jobs:
       - name: Build
         run: dotnet build backend/GithubManager/GithubManager.csproj --configuration Release --no-restore
 
+      - name: Test
+        run: dotnet test backend/GithubManager.Tests/GithubManager.Tests.csproj --configuration Release
+
       - name: Publish
         run: dotnet publish backend/GithubManager/GithubManager.csproj --configuration Release --output ./publish
 
