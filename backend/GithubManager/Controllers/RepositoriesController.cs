@@ -32,7 +32,7 @@ namespace GithubManager.Controllers
                 new AuthenticationHeaderValue("Bearer", token);
 
             var response = await client.GetAsync(
-                $"https://api.github.com/users/{organization}/repos");
+                $"https://api.github.com/user/repos?visibility=all");
 
             if (!response.IsSuccessStatusCode)
             {
