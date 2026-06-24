@@ -2,6 +2,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using GithubManager.Models;
 
 namespace GithubManager.Controllers
 {
@@ -102,11 +103,6 @@ namespace GithubManager.Controllers
             {
                 message = request.Archived ? "Repository archived." : "Repository unarchived."
             });
-        }
-
-        public class ArchiveRequest
-        {
-            public bool Archived { get; set; }
         }
     }
 }
