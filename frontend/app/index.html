@@ -12,15 +12,29 @@
 
     <button id="loadRepos">Load repositories</button>
 
-    <details open>
-        <summary>Niet-gearchiveerde repositories</summary>
-        <ul id="activeRepoList"></ul>
-    </details>
+    <div class="container">
 
-    <details>
-        <summary>Gearchiveerde repositories</summary>
-        <ul id="archivedRepoList"></ul>
-    </details>
+        <div class="sidebar">
+            <h3>Filter op topics</h3>
+            <button id="clearFilters">Wis filters</button>
+            <div id="topicFilters"></div>
+        </div>
+
+        <div class="content">
+
+            <details open>
+                <summary>Niet-gearchiveerde repositories</summary>
+                <ul id="activeRepoList"></ul>
+            </details>
+
+            <details>
+                <summary>Gearchiveerde repositories</summary>
+                <ul id="archivedRepoList"></ul>
+            </details>
+
+        </div>
+
+    </div>
 
     <script src="script.js"></script>
 

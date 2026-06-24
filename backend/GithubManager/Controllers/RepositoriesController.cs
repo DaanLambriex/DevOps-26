@@ -57,7 +57,13 @@ namespace GithubManager.Controllers
                 description = repo.GetProperty("description").GetString(),
                 htmlUrl = repo.GetProperty("html_url").GetString(),
                 isPrivate = repo.GetProperty("private").GetBoolean(),
-                archived = repo.GetProperty("archived").GetBoolean()
+                archived = repo.GetProperty("archived").GetBoolean(),
+                topics = repo.TryGetProperty("topics", out var topicsElement)
+                    ? topicsElement.EnumerateArray()
+                        .Select(topic => topic.GetString())
+                        .Where(topic => topic != null)
+                        .ToList()
+                    : new List<string>()
             }).ToList();
 
             return Ok(repositories);
