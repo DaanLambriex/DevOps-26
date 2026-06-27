@@ -20,8 +20,8 @@ namespace GithubManager.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRepositories()
         {
-            var token = _configuration["GitHub:Token"];
-            var organization = _configuration["GitHub:Organization"];
+            var token = _configuration["Github:Token"];
+            var organization = _configuration["Github:Organization"];
 
             using var client = new HttpClient();
 
@@ -72,8 +72,18 @@ namespace GithubManager.Controllers
         [HttpPatch("{repositoryName}/archive")]
         public async Task<IActionResult> UpdateArchiveStatus(string repositoryName, [FromBody] ArchiveRequest request)
         {
+            if (string.IsNullOrWhiteSpace(repositoryName))
+            {
+                return BadRequest("Repository name is required.");
+            }
+
             var token = _configuration["Github:Token"];
             var organization = _configuration["Github:Organization"];
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return BadRequest("GitHub token is missing.");
+            }
 
             using var client = new HttpClient();
 
