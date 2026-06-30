@@ -11,10 +11,12 @@ namespace GithubManager.Controllers
     public class RepositoriesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<RepositoriesController> _logger;
 
-        public RepositoriesController(IConfiguration configuration)
+        public RepositoriesController(IConfiguration configuration, ILogger<RepositoriesController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -22,6 +24,7 @@ namespace GithubManager.Controllers
         {
             var token = _configuration["Github:Token"];
             var organization = _configuration["Github:Organization"];
+            _logger.LogInformation("Repositories ophalen gestart via de GitHub API.");
 
             using var client = new HttpClient();
 
@@ -38,6 +41,12 @@ namespace GithubManager.Controllers
             {
                 var errorBody = await response.Content.ReadAsStringAsync();
 
+                _logger.LogError(
+                    "GitHub API request failed. StatusCode: {StatusCode}, Reason: {Reason}",
+                    (int)response.StatusCode,
+                    response.ReasonPhrase
+                );
+
                 return StatusCode((int)response.StatusCode, new
                 {
                     message = "GitHub API request failed",
@@ -48,6 +57,8 @@ namespace GithubManager.Controllers
             }
 
             var json = await response.Content.ReadAsStringAsync();
+
+            _logger.LogInformation("Repositories succesvol ontvangen vanuit de GitHub API.");
 
             using var document = JsonDocument.Parse(json);
 
