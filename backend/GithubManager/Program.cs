@@ -26,6 +26,8 @@ namespace GithubManager
 
             var app = builder.Build();
 
+            app.Logger.LogInformation("GitHub Manager backend is gestart in Azure.");
+
             app.UseSwagger();
             app.UseSwaggerUI();
 
