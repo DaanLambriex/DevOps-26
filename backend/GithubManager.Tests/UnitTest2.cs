@@ -2,6 +2,7 @@
 using GithubManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace GithubManager.Tests
 {
@@ -20,7 +21,8 @@ namespace GithubManager.Tests
                 .AddInMemoryCollection(settings)
                 .Build();
 
-            var controller = new RepositoriesController(configuration);
+            var logger = NullLogger<RepositoriesController>.Instance;
+            var controller = new RepositoriesController(configuration, logger);
 
             var request = new ArchiveRequest
             {
